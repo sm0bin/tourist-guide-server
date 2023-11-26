@@ -14,11 +14,7 @@ app.use(cors());
 // const touristRouter = require('./routes/touristRouter');
 
 // database connection
-const uri = process.env.DB_URI;
-mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect(process.env.DB_URI)
     .then(() => { console.log("Connection successful.") })
     .catch((err) => { console.log(err) })
 

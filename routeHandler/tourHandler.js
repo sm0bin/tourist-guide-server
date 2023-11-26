@@ -1,15 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
-const tourSchema = require('../schemas/tourSchema');
-const Tour = new mongoose.model('Tour', tourSchema);
+
+const Tours = require('../schemas/toursSchema');
 const TourTypes = require('../schemas/tourTypesSchema');
 const TourGuides = require('../schemas/tourGuidesSchema');
 
 
 router.get('/tours', async (req, res) => {
-    const tours = await Tour.find();
-    res.send(tours);
+    try {
+        const tours = await Tours.find().select("thumbnail tourType tripTitle price description");
+        res.send(tours);
+    } catch (error) {
+        console.error(error.message)
+        res.status(404).send({ error: error.message });
+    }
 })
 
 router.get('/types', async (req, res) => {
@@ -24,7 +29,7 @@ router.get('/guides', async (req, res) => {
 
 
 router.post('/tours', async (req, res) => {
-    const tour = new Tour(req.body);
+    const tour = new Tours(req.body);
     await tour.save();
     res.send(tour);
 })
@@ -43,11 +48,11 @@ router.post('/guides', async (req, res) => {
 
 router.get('/tours/:id', async (req, res) => {
     try {
-        const tour = await Tour.findOne({ _id: req.params.id });
+        const tour = await Tours.findOne({ _id: req.params.id });
         res.send(tour);
-    } catch {
-        res.status(404);
-        res.send({ error: "Tour doesn't exist!" });
+    } catch (error) {
+        console.error(error.mess)
+        res.status(404).send({ error: error.message });
     }
 })
 
@@ -55,9 +60,9 @@ router.get('/types/:id', async (req, res) => {
     try {
         const tourType = await TourTypes.findOne({ _id: req.params.id });
         res.send(tourType);
-    } catch {
-        res.status(404);
-        res.send({ error: "Tour Type doesn't exist!" });
+    } catch (error) {
+        console.error(error.mess)
+        res.status(404).send({ error: error.message });
     }
 })
 
@@ -65,9 +70,9 @@ router.get('/guides/:id', async (req, res) => {
     try {
         const tourGuide = await TourGuides.findOne({ _id: req.params.id });
         res.send(tourGuide);
-    } catch {
-        res.status(404);
-        res.send({ error: "Tour Guide doesn't exist!" });
+    } catch (error) {
+        console.error(error.mess)
+        res.status(404).send({ error: error.message });
     }
 })
 

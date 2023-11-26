@@ -54,4 +54,6 @@ const tourSchema = new mongoose.Schema({
     }
 })
 
-module.exports = tourSchema;
+const Tours = new mongoose.model('Packges', tourSchema);
+
+module.exports = Tours;

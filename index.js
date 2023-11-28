@@ -4,13 +4,23 @@ const mongoose = require('mongoose');
 // const dotenv = require('dotenv');
 const app = express();
 const port = process.env.PORT || 5500;
-require('dotenv').config();
 const cors = require('cors');
-const tourHandler = require('./routeHandler/tourHandler');
+
+const toursHandler = require('./routeHandler/toursHandler');
+const bookingsHandler = require('./routeHandler/bookingsHandler');
+const othersHandler = require('./routeHandler/othersHandler');
+const guidesHandler = require('./routeHandler/guidesHandler');
+const storiesHandler = require('./routeHandler/storiesHandler');
 
 // middleware
 app.use(express.json())
-app.use(cors());
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        // "https://tourist-guide.netlify.app"
+    ],
+    credentials: true
+}));
 // const touristRouter = require('./routes/touristRouter');
 
 // database connection
@@ -20,24 +30,26 @@ mongoose.connect(process.env.DB_URI)
 
 
 // application routes
-app.use("/", tourHandler);
+app.use("/", othersHandler);
+app.use("/tours", toursHandler);
+app.use("/bookings", bookingsHandler);
+app.use("/guides", guidesHandler);
+app.use("/stories", storiesHandler)
+
 
 // default error handler
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (error, req, res, next) => {
     if (res.headersSent) {
-        next(err);
+        next(error);
     } else {
-        res.status(500).json({ error: err });
+        res.status(500).json({ error: error });
     }
 }
 
 app.use(errorHandler);
 
-// app.get('/', (req, res) => {
-//     res.send("Tourist Guide Server is running...");
-// })
 
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port ${port}`);
 })

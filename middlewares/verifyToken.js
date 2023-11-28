@@ -34,12 +34,15 @@
 // module.exports = checkLogin;
 
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
+// const cors = require('cors');
 
 const verifyToken = (req, res, next) => {
     const { authorization } = req.headers;
     if (!authorization) {
         return res.status(401).send({ message: "Unauthorized access!" });
     }
+    console.log(authorization);
     try {
         const token = authorization.split(" ")[1];
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
@@ -50,6 +53,7 @@ const verifyToken = (req, res, next) => {
             next();
         });
     } catch (err) {
+        console.log(err);
         next("Authentication failure!");
     }
 }

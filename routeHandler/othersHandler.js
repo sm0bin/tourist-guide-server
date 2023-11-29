@@ -4,16 +4,21 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const TourTypes = require('../schemas/tourTypesSchema');
+const Tourists = require('../schemas/touristsSchema');
 
 router.get('/', (req, res) => {
     res.send("Tourist Guide Server is running...");
 })
 
 
-router.post("/jwt", (req, res) => {
+router.post("/jwt", async (req, res) => {
     try {
         const user = req.body;
-        console.log(user);
+        // console.log(user);
+        // console.log(req.headers);
+        const tourist = new Tourists(user);
+        await tourist.save();
+
         const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1h" });
         res.send({ token });
     } catch (error) {

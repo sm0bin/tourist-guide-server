@@ -11,6 +11,7 @@ const bookingsHandler = require('./routeHandler/bookingsHandler');
 const othersHandler = require('./routeHandler/othersHandler');
 const guidesHandler = require('./routeHandler/guidesHandler');
 const storiesHandler = require('./routeHandler/storiesHandler');
+const touristsHandler = require('./routeHandler/touristsHandler');
 
 // middleware
 app.use(express.json())
@@ -34,7 +35,8 @@ app.use("/", othersHandler);
 app.use("/tours", toursHandler);
 app.use("/bookings", bookingsHandler);
 app.use("/guides", guidesHandler);
-app.use("/stories", storiesHandler)
+app.use("/stories", storiesHandler);
+app.use("/tourists", touristsHandler);
 
 
 // default error handler

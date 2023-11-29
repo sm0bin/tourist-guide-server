@@ -28,22 +28,42 @@ router.get('/:email', verifyToken, async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+// router.get('/:id')
+
+router.post('/', verifyToken, async (req, res) => {
     try {
-        const { tourId, userEmail } = req.body;
-
         const booking = new Bookings(req.body);
-        await booking.save();
-
-
-        const tourist = await Tourists.findOne({ email: userEmail });
-        tourist.bookings.push(tourId);
-        await tourist.save();
-        res.send(tourist.bookings);
+        const result = await booking.save();
+        res.send(result);
     } catch (error) {
         console.error(error.message)
         res.status(404).send({ error: error.message });
     }
 })
+
+router.put('/:id', verifyToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { price } = req.body;
+        const result = await Bookings.updateOne({ _id: id }, { $set: { price: price } });
+        res.send(result);
+    } catch (error) {
+        console.error(error.message)
+        res.status(404).send({ error: error.message });
+    }
+})
+
+
+
+// router.delete('/:id', verifyToken, async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const result = await Bookings.deleteOne({ _id: id });
+//         res.send(result);
+//     } catch (error) {
+//         console.error(error.message)
+//         res.status(404).send({ error: error.message });
+//     }
+// })
 
 module.exports = router;

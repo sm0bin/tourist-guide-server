@@ -31,6 +31,19 @@ router.get('/:email', verifyToken, async (req, res) => {
     }
 })
 
+// Tourist Role Change
+router.put('/role/:id', verifyToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { role } = req.body;
+        const result = await Tourists.updateOne({ _id: id }, { $set: { role: role } });
+        res.send(result);
+    } catch (error) {
+        console.error(error.message)
+        res.status(404).send({ error: error.message });
+    }
+})
+
 // Create a tourist
 router.post('/', async (req, res) => {
     try {

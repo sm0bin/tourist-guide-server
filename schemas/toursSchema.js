@@ -20,7 +20,7 @@ const tourSchema = new mongoose.Schema({
     },
     gallery: {
         type: Array,
-        required: true
+        required: false
     },
     tourType: {
         type: String,
@@ -47,19 +47,8 @@ const tourSchema = new mongoose.Schema({
         },
         days: {
             type: Array,
-            required: true,
-            day: {
-                type: Number,
-                required: true
-            },
-            title: {
-                type: String,
-                required: true
-            },
-            details: {
-                type: String,
-                required: true
-            }
+            required: false
+
         }
     },
     description: {

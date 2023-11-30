@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Tours = require('../schemas/toursSchema');
+const verifyToken = require('../middlewares/verifyToken');
 
 
 router.get('/', async (req, res) => {
@@ -34,7 +35,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
     try {
         const tour = new Tours(req.body);
         await tour.save();

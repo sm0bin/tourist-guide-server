@@ -66,7 +66,7 @@ const tourGuideSchema = new mongoose.Schema({
     },
     rating: {
         type: Number,
-        required: true
+        required: false
     }
 })
 

@@ -53,6 +53,18 @@ router.put('/:id', verifyToken, async (req, res) => {
     }
 })
 
+router.put('/status/:id', verifyToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const result = await Bookings.updateOne({ _id: id }, { $set: { status: status } });
+        res.send(result);
+    } catch (error) {
+        console.error(error.message)
+        res.status(404).send({ error: error.message });
+    }
+})
+
 
 
 // router.delete('/:id', verifyToken, async (req, res) => {

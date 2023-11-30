@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const touristsSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: false
     },
     imageUrl: {
         type: String,
-        required: true
+        required: false
     },
     email: {
         type: String,
@@ -22,6 +22,10 @@ const touristsSchema = new mongoose.Schema({
         required: false
     },
     coupon: {
+        type: String,
+        required: false
+    },
+    role: {
         type: String,
         required: false
     }

@@ -14,12 +14,16 @@ router.get('/', (req, res) => {
 router.post("/jwt", async (req, res) => {
     try {
         const user = req.body;
-        // console.log(user);
+        console.log(user);
         // console.log(req.headers);
-        const tourist = new Tourists(user);
-        await tourist.save();
+        const tourist = await Tourists.findOne({ email: user.email });
+        if (!tourist) {
+            const tourist = new Tourists(user);
+            await tourist.save();
+        }
 
         const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1h" });
+        console.log(token);
         res.send({ token });
     } catch (error) {
         console.error(error.message)

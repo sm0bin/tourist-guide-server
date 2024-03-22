@@ -18,8 +18,8 @@ app.use(express.json())
 app.use(cors({
     origin: [
         "http://localhost:5173",
-        "tourist-guide-sm.web.app",
-        "tourist-guide-sm.firebaseapp.com"
+        "https://tourist-guide-sm.web.app",
+        "https://tourist-guide-sm.firebaseapp.com"
     ],
     credentials: true
 }));

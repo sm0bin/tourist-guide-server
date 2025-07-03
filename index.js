@@ -21,7 +21,8 @@ app.use(cors({
         "https://tourist-guide-sm.web.app",
         "https://tourist-guide-sm.firebaseapp.com"
     ],
-    credentials: true
+    credentials: true,
+
 }));
 // const touristRouter = require('./routes/touristRouter');
 
